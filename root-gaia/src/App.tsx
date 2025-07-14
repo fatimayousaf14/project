@@ -1,38 +1,53 @@
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import Welcome from "./Welcome";
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
 import HomePage from "./HomePage";
+import type { JSX } from "react/jsx-runtime";
 
 function App() {
+  const [user, setUser] = useState(false);
+
+  const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
+    if (!user) {
+      return <Navigate to="/" replace />;
+    }
+    return children;
+  };
+
   return (
-    <div className="app">
-      <header className="hero">
-        <h1>Root Gaia</h1>
-        <p>Nurturing skin from the root up.</p>
-      </header>
+    <Router>
+      <div className="app">
+        <header className="hero">
+          <h1>Root</h1>
+          <p>Your Body. Your Balance</p>
+        </header>
 
-      <HomePage />
+        <Routes>
+          <Route path="/" element={<Welcome />} />
+          <Route path="/signin" element={<SignIn setUser={setUser} />} />
+          <Route path="/signup" element={<SignUp setUser={setUser} />} />
+          <Route
+            path="/home"
+            element={
+              <ProtectedRoute>
+                <HomePage />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
 
-      <main>
-        <section className="about">
-          <h2>Our Philosophy</h2>
-          <p>
-            We blend nature and science to deliver clean, honest skincare
-            grounded in earth’s wisdom.
-          </p>
-        </section>
-
-        <section className="products">
-          <h2>Coming Soon</h2>
-          <p>Botanical serums, earthy cleansers, and more — launching soon.</p>
-        </section>
-      </main>
-
-      <footer>
-        <p>&copy; 2025 Root Gaia. All rights reserved.</p>
-      </footer>
-    </div>
+        <footer>
+          <p>&copy; 2025 Root. All rights reserved.</p>
+        </footer>
+      </div>
+    </Router>
   );
 }
 
