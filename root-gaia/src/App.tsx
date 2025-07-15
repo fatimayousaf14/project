@@ -3,12 +3,14 @@ import {
   Routes,
   Route,
   Navigate,
+  RouterProvider,
 } from "react-router-dom";
 import { useState } from "react";
 import Welcome from "./Welcome";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import HomePage from "./HomePage";
+import OnboardingStart from "./OnboardingStart";
 import type { JSX } from "react/jsx-runtime";
 
 function App() {
@@ -33,6 +35,7 @@ function App() {
           <Route path="/" element={<Welcome />} />
           <Route path="/signin" element={<SignIn setUser={setUser} />} />
           <Route path="/signup" element={<SignUp setUser={setUser} />} />
+          <Route path="/OnboardingStart" element={<OnboardingStart />} />
           <Route
             path="/home"
             element={
